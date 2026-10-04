@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.streamlit/secrets.toml
+Arial*.ttf
+*.ckpt
+*.h5ad

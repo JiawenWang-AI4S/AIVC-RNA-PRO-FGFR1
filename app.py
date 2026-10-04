@@ -18,25 +18,23 @@ with t1:
  st.success('当前状态：Erdafitinib–FGFR1 对接已完成，并通过 5EW8 共晶重对接校验。')
  st.info('候选排序回答“优先验证谁”；对接回答“是否存在合理结合构象”。二者不是同一分数。')
 with t2:
- st.header('转录组结果展示')
- st.caption('按展示要求选用 representative LOCO MDA-MB-453(ATCC) 分类结果；图像为对应 300 dpi PDF 的网页预览。')
- for f,cap in [('representative_LOCO_MDA-MB-453(ATCC)_metrics_ACC_confusion_heatmap_300dpi.png','分类性能与混淆矩阵'),('representative_LOCO_MDA-MB-453(ATCC)_ROC_PR_300dpi.png','ROC 与 Precision–Recall 曲线')]:
-  q=ROOT/'assets/transcriptome'/f
-  if q.exists(): st.image(str(q),caption=cap,use_container_width=True)
- for f in ['representative_LOCO_MDA-MB-453(ATCC)_metrics_ACC_confusion_heatmap_300dpi.pdf','representative_LOCO_MDA-MB-453(ATCC)_ROC_PR_300dpi.pdf']:
-  q=ROOT/'assets/transcriptome'/f
-  if q.exists(): st.download_button('下载 '+f,data=q.read_bytes(),file_name=f,mime='application/pdf')
- st.warning('说明：这两张图来自 ProteinTalks official S5/S6 CV 目录。此处按你的展示编排放在“转录组”页，指标本质仍是蛋白组分类 benchmark。')
-with t3:
- st.header('蛋白组结果展示')
- st.caption('按展示要求选用 Replogle HepG2 zero-shot 的 effect-size 与本地/官方对照图；图像为对应 300 dpi PDF 的网页预览。')
+ st.header('转录组结果展示 · STATE/Replogle')
+ st.caption('HepG2 zero-shot effect-size 预测，以及本地复现与官方同 checkpoint 对照；图像为对应 300 dpi PDF 的网页预览。')
  for f,cap in [('effect_size_spearman_scatter_300dpi.png','Effect-size Spearman scatter'),('local_official_comparison.png','本地复现与官方同 checkpoint 对照')]:
   q=ROOT/'assets/proteome'/f
   if q.exists(): st.image(str(q),caption=cap,use_container_width=True)
  for f in ['effect_size_spearman_scatter_300dpi.pdf','local_official_comparison_300dpi.pdf']:
   q=ROOT/'assets/proteome'/f
   if q.exists(): st.download_button('下载 '+f,data=q.read_bytes(),file_name=f,mime='application/pdf')
- st.warning('说明：这两张图来自 STATE/Replogle 转录扰动评测目录。此处按你的展示编排放在“蛋白组”页，指标本质仍是转录组 benchmark。')
+with t3:
+ st.header('蛋白组结果展示 · ProteinTalks')
+ st.caption('Representative LOCO MDA-MB-453(ATCC) 分类性能、混淆矩阵和 ROC/PR；图像为对应 300 dpi PDF 的网页预览。')
+ for f,cap in [('representative_LOCO_MDA-MB-453(ATCC)_metrics_ACC_confusion_heatmap_300dpi.png','分类性能与混淆矩阵'),('representative_LOCO_MDA-MB-453(ATCC)_ROC_PR_300dpi.png','ROC 与 Precision–Recall 曲线')]:
+  q=ROOT/'assets/transcriptome'/f
+  if q.exists(): st.image(str(q),caption=cap,use_container_width=True)
+ for f in ['representative_LOCO_MDA-MB-453(ATCC)_metrics_ACC_confusion_heatmap_300dpi.pdf','representative_LOCO_MDA-MB-453(ATCC)_ROC_PR_300dpi.pdf']:
+  q=ROOT/'assets/transcriptome'/f
+  if q.exists(): st.download_button('下载 '+f,data=q.read_bytes(),file_name=f,mime='application/pdf')
 with t4:
  st.header('多模态候选排序')
  st.metric('Rank #1','Erdafitinib / FGFR1','融合分数 0.498990',delta_color='off')

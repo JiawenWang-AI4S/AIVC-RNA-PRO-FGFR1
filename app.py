@@ -18,23 +18,25 @@ with t1:
  st.success('当前状态：Erdafitinib–FGFR1 对接已完成，并通过 5EW8 共晶重对接校验。')
  st.info('候选排序回答“优先验证谁”；对接回答“是否存在合理结合构象”。二者不是同一分数。')
 with t2:
- st.header('STATE · Replogle-Nadig HepG2 zero-shot')
- local=pd.read_csv(RESULT/'hepg2_agg_results.csv').iloc[0]
- official=pd.read_csv(OFFICIAL/'hepg2_agg_results.csv').iloc[0]
- keys=[('Pearson Δ','pearson_delta'),('DE overlap @50','overlap_at_50'),('Discrimination L1','discrimination_score_l1'),('Discrimination cosine','discrimination_score_cosine')]
- cs=st.columns(4)
- for c,(lab,k) in zip(cs,keys): c.metric(lab,f'{local[k]:.6f}',f'官方同 checkpoint {official[k]:.6f}',delta_color='off')
- st.caption('主结论：batch adapter 后扰动效应预测有所改善；论文主表与此 HepG2 zero-shot checkpoint 聚合口径不同。')
- for f,cap in [('pearson_delta_scatter.png','Observed vs predicted Δ expression'),('cell_eval_metric_panels.png','Cell-Eval 多指标逐扰动分布')]:
-  p=FIG/f
-  if p.exists(): st.image(str(p),caption=cap,use_container_width=True)
+ st.header('转录组结果展示')
+ st.caption('按展示要求选用 representative LOCO MDA-MB-453(ATCC) 分类结果；图像为对应 300 dpi PDF 的网页预览。')
+ for f,cap in [('representative_LOCO_MDA-MB-453(ATCC)_metrics_ACC_confusion_heatmap_300dpi.png','分类性能与混淆矩阵'),('representative_LOCO_MDA-MB-453(ATCC)_ROC_PR_300dpi.png','ROC 与 Precision–Recall 曲线')]:
+  q=ROOT/'assets/transcriptome'/f
+  if q.exists(): st.image(str(q),caption=cap,use_container_width=True)
+ for f in ['representative_LOCO_MDA-MB-453(ATCC)_metrics_ACC_confusion_heatmap_300dpi.pdf','representative_LOCO_MDA-MB-453(ATCC)_ROC_PR_300dpi.pdf']:
+  q=ROOT/'assets/transcriptome'/f
+  if q.exists(): st.download_button('下载 '+f,data=q.read_bytes(),file_name=f,mime='application/pdf')
+ st.warning('说明：这两张图来自 ProteinTalks official S5/S6 CV 目录。此处按你的展示编排放在“转录组”页，指标本质仍是蛋白组分类 benchmark。')
 with t3:
- st.header('ProteinTalks · 时间分辨蛋白动态推理')
- c1,c2,c3=st.columns(3); c1.metric('伪 bulk 组','4,813'); c2.metric('时间点','6 / 24 / 48 h'); c3.metric('有限值输出','100%')
- st.warning('边界：尚缺真实配对真值与原始药物特征的严格 benchmark，因此本页展示运行完整性，不把它表述为临床性能。')
- for f in ['proteintalks_task_metrics.png','proteintalks_metric_heatmap.png']:
-  p=PTF/f
-  if p.exists(): st.image(str(p),use_container_width=True)
+ st.header('蛋白组结果展示')
+ st.caption('按展示要求选用 Replogle HepG2 zero-shot 的 effect-size 与本地/官方对照图；图像为对应 300 dpi PDF 的网页预览。')
+ for f,cap in [('effect_size_spearman_scatter_300dpi.png','Effect-size Spearman scatter'),('local_official_comparison.png','本地复现与官方同 checkpoint 对照')]:
+  q=ROOT/'assets/proteome'/f
+  if q.exists(): st.image(str(q),caption=cap,use_container_width=True)
+ for f in ['effect_size_spearman_scatter_300dpi.pdf','local_official_comparison_300dpi.pdf']:
+  q=ROOT/'assets/proteome'/f
+  if q.exists(): st.download_button('下载 '+f,data=q.read_bytes(),file_name=f,mime='application/pdf')
+ st.warning('说明：这两张图来自 STATE/Replogle 转录扰动评测目录。此处按你的展示编排放在“蛋白组”页，指标本质仍是转录组 benchmark。')
 with t4:
  st.header('多模态候选排序')
  st.metric('Rank #1','Erdafitinib / FGFR1','融合分数 0.498990',delta_color='off')

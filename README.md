@@ -7,7 +7,6 @@ Auditable multimodal virtual-cell drug-screening demo: STATE transcriptomics →
 - Target: **FGFR1**
 - Candidate: **Erdafitinib**
 - Multimodal rank: **#1**
-- STATE / ProteinTalks / fusion scores: 0.452020 / 0.545455 / 0.498990
 - Best AutoDock Vina score: **−9.147 kcal/mol**
 - Lowest redocking RMSD against PDB 5EW8: **0.886 Å**
 
